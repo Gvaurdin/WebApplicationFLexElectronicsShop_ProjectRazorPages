@@ -1,0 +1,25 @@
+﻿@page
+@model FLexElectronicsShop.Pages.DigitalProducts.IndexModel
+@{
+    ViewData["Title"] = "Каталог продуктов";
+}
+
+<div class="container-fluid" style="padding-top: 15px">
+
+    <div class="row row-cols-6">
+        @foreach(var product in Model.Products)
+        {
+            <div class="col" style="margin-top:20px">
+                <div class="card" style="width: 18rem; height: 350px">
+                    <img src="@product.URL" class="card-img-top" alt="@product.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                       
+                        <div class="d-flex justify-content-between">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
