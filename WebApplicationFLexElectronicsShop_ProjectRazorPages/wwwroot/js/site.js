@@ -1,4 +1,8 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function updateHeaderHeight() {
+    var headerHeight = document.querySelector('nav').offsetHeight;
+    document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
+}
 
-// Write your JavaScript code.
+// Обновляем высоту хедера при загрузке страницы и при изменении размера окна
+window.addEventListener('load', updateHeaderHeight);
+window.addEventListener('resize', updateHeaderHeight);

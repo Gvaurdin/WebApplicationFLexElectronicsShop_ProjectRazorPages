@@ -4,18 +4,21 @@
     ViewData["Title"] = "Каталог продуктов";
 }
 
-<div class="container-fluid" style="padding-top: 15px">
+<div class="container-fluid" style="padding-top: 35px">
+    <a asp-page="/DigitalProducts/Add" class="btn btn-success mb-3">Добавить</a>
 
-    <div class="row row-cols-6">
-        @foreach(var product in Model.Products)
+    <div class="row row-cols-4">
+        @foreach (var product in Model.Products)
         {
-            <div class="col" style="margin-top:20px">
-                <div class="card" style="width: 18rem; height: 350px">
+            <div class="col mb-4">
+                <div class="card h-100">
                     <img src="@product.URL" class="card-img-top" alt="@product.Name">
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Name</h5>
-                       
-                        <div class="d-flex justify-content-between">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title flex-grow-1">@product.Name</h5>
+                        <div class="mt-auto">
+                            <a asp-page="/DigitalProducts/Details" asp-route-id="@product.Id" class="btn btn-primary">Купить</a>
+                            <a asp-page="/DigitalProducts/Delete" asp-route-id="@product.Id" class="btn btn-danger btn-block">Удалить</a>
+                            <a asp-page="/DigitalProducts/Edit" asp-route-id="@product.Id" class="btn btn-primary">Редактировать</a>
                         </div>
                     </div>
                 </div>

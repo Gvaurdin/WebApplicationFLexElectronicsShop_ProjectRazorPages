@@ -1,0 +1,31 @@
+﻿@page
+@model FLexElectronicsShop.Pages.DigitalProducts.EditModel
+@{
+    ViewData["Title"] = "Изменение продукта";
+}
+<form method="post">
+    <div hidden="hidden">
+        <input asp-for="Product.Id" type="number" />
+    </div>
+    <div>
+        <label>Название продукта</label>
+        <input asp-for="Product.Name" type="text" style="width: 400px" />
+        <span asp-validation-for="Product.Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Ссылка на фото</label>
+        <input asp-for="Product.URL" type="text" />
+        <span asp-validation-for="Product.URL" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Описание продукта</label>
+        <input asp-for="Product.Description" type="text" />
+        <span asp-validation-for="Product.Description" class="text-danger"></span>
+    </div>
+        <div>
+    <label>Стоимость продукта</label>
+    <input asp-for="Product.Price" type="text" />
+    <span asp-validation-for="Product.Price" class="text-danger"></span>
+    </div>
+    <button type="submit" asp-route-id="@Model.Product.Id" asp-page-handler="update" class="btn btn-primary">Обновить</button>
+</form>

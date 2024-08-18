@@ -9,10 +9,13 @@ namespace FLexElectronicsShop.Model
         [Required(ErrorMessage = "Вы не заполнили поле \"Название\"")]
         [StringLength(maximumLength: 60, MinimumLength = 2)]
         public required string Name { get; set; }
-        [Required(ErrorMessage = "Вы не заполнили поле \"Ссылка на фильм\"")]
+        [Required(ErrorMessage = "Вы не заполнили поле \"Ссылка на продукт\"")]
         public required string URL { get; set; }
-        [Required(ErrorMessage = "Вы не заполнили поле \"Название\"")]
-        [Range(100,1000000)]
+        [Required(ErrorMessage = "Вы не заполнили поле \"Стоимость\"")]
+        [Range(100, 1000000)]
         public double Price { get; set; }
+
+        [Required(ErrorMessage = "Вы не заполнили поле \"Описание продукта\"")]
+        public required string Description { get; set; }
     }
 }
