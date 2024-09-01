@@ -34,7 +34,6 @@ namespace FLexElectronicsShop.Pages.StoreManagement.CategoryManagement
             {
                 return Page();
             }
-
             _context.Categories.Add(Category);
             await _context.SaveChangesAsync();
 

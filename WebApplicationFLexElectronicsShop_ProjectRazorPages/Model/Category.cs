@@ -9,6 +9,6 @@ namespace FLexElectronicsShop.Model
         public required string Name { get; set; }
         [Required(ErrorMessage = "Вы не заполнили поле \"Описание категории\"")]
         public required string Description { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }

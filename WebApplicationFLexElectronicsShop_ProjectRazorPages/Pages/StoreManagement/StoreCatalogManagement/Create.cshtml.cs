@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FLexElectronicsShop.Data;
 using FLexElectronicsShop.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace FLexElectronicsShop.Pages.StoreManagement.StoreCatalogManagement
 {
@@ -32,11 +33,13 @@ namespace FLexElectronicsShop.Pages.StoreManagement.StoreCatalogManagement
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            CatalogItem.Promotion = await _context.Promotions.FirstAsync(p => p.Id == CatalogItem.PromotionId);
+            CatalogItem.ApplyDiscount(CatalogItem.Promotion,CatalogItem.DiscountedPrice,CatalogItem.Price);
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
+            
             _context.CatalogItems.Add(CatalogItem);
             await _context.SaveChangesAsync();
 

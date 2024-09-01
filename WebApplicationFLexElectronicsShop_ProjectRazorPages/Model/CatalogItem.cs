@@ -7,7 +7,7 @@ namespace FLexElectronicsShop.Model
         public int Id { get; set; }
 
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         [Required(ErrorMessage = "Вы не заполнили поле \"Стоимость\"")]
         [Range(100, 1000000)]
@@ -17,21 +17,21 @@ namespace FLexElectronicsShop.Model
         public int Stock { get; set; }
 
         public int? PromotionId { get; set; }
-        public Promotion Promotion { get; set; }
+        public Promotion? Promotion { get; set; }
 
         public bool IsAvailable { get; set; }
 
         public double DiscountedPrice { get; set; }
 
-        public void ApplyDiscount()
+        public static void ApplyDiscount(Promotion promotion, double discountedPrice, double price)
         {
-            if (Promotion != null && Promotion.StartDate <= DateTime.Now && Promotion.EndDate >= DateTime.Now)
+            if (promotion != null && promotion.StartDate <= DateTime.Now && promotion.EndDate >= DateTime.Now)
             {
-                DiscountedPrice = Price * (1 - Promotion.DiscountPercentage / 100);
+                discountedPrice = price * (1 - promotion.DiscountPercentage / 100);
             }
             else
             {
-                DiscountedPrice = Price;
+                discountedPrice = price;
             }
         }
     }

@@ -19,6 +19,6 @@ namespace FLexElectronicsShop.Model
         [Required(ErrorMessage = "Вы не заполнили поле \"Дата окончания акции\"")]
         public DateTime EndDate { get; set; }
 
-        public ICollection<CatalogItem> CatalogItems { get; set; }
+        public ICollection<CatalogItem>? CatalogItems { get; set; }
     }
 }
