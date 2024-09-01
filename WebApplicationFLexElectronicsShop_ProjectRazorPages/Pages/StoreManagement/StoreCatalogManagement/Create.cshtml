@@ -1,0 +1,57 @@
+﻿@page
+@model FLexElectronicsShop.Pages.StoreManagement.StoreCatalogManagement.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CatalogItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CatalogItem.ProductId" class="control-label"></label>
+                <select asp-for="CatalogItem.ProductId" class ="form-control" asp-items="ViewBag.ProductId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CatalogItem.Price" class="control-label"></label>
+                <input asp-for="CatalogItem.Price" class="form-control" />
+                <span asp-validation-for="CatalogItem.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CatalogItem.Stock" class="control-label"></label>
+                <input asp-for="CatalogItem.Stock" class="form-control" />
+                <span asp-validation-for="CatalogItem.Stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CatalogItem.PromotionId" class="control-label"></label>
+                <select asp-for="CatalogItem.PromotionId" class ="form-control" asp-items="ViewBag.PromotionId"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CatalogItem.IsAvailable" /> @Html.DisplayNameFor(model => model.CatalogItem.IsAvailable)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CatalogItem.DiscountedPrice" class="control-label"></label>
+                <input asp-for="CatalogItem.DiscountedPrice" class="form-control" />
+                <span asp-validation-for="CatalogItem.DiscountedPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
