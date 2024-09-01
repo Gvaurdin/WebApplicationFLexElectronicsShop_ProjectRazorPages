@@ -24,8 +24,8 @@
     </div>
         <div>
     <label>Стоимость продукта</label>
-    <input asp-for="Product.Price" type="text" />
-    <span asp-validation-for="Product.Price" class="text-danger"></span>
+@*     <input asp-for="Product.Price" type="text" />
+    <span asp-validation-for="Product.Price" class="text-danger"></span> *@
     </div>
     <button type="submit" asp-route-id="@Model.Product.Id" asp-page-handler="update" class="btn btn-primary">Обновить</button>
 </form>

@@ -7,7 +7,7 @@
 <div class="container">
     <form method="post">
         <h1>Вы уверены, что хотите удалить продукт @Model.Product.Name</h1>
-        <p>@Model.Product.Price</p>
+        @* <p>@Model.Product.Price</p> *@
         <button type="submit" asp-route-id="@Model.Product.Id" asp-page-handler="delete" class="btn btn-primary">Удалить</button>
     </form>
 </div>

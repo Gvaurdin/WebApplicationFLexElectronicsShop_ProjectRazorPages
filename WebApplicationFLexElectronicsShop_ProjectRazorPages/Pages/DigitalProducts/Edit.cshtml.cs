@@ -26,7 +26,7 @@ namespace FLexElectronicsShop.Pages.DigitalProducts
             updateProduct!.Name = Product!.Name;
             updateProduct.URL = Product!.URL;
             updateProduct.Description = Product!.Description;
-            updateProduct.Price = Product!.Price;
+            //updateProduct.Price = Product!.Price;
             await fEShopContext.SaveChangesAsync();
 
 
