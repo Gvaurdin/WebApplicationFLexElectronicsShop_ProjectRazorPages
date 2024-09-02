@@ -23,7 +23,7 @@ namespace FLexElectronicsShop.Model
 
         public double DiscountedPrice { get; set; }
 
-        public static void ApplyDiscount(Promotion promotion, double discountedPrice, double price)
+        public static double ApplyDiscount(Promotion promotion,double discountedPrice, double price)
         {
             if (promotion != null && promotion.StartDate <= DateTime.Now && promotion.EndDate >= DateTime.Now)
             {
@@ -31,8 +31,10 @@ namespace FLexElectronicsShop.Model
             }
             else
             {
-                discountedPrice = price;
+                discountedPrice = 0;
             }
+
+            return discountedPrice;
         }
     }
 }

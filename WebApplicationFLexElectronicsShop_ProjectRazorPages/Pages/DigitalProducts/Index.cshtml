@@ -5,8 +5,14 @@
 }
 
 <div class="container-fluid" style="padding-top: 35px">
-    <a asp-page="/DigitalProducts/Add" class="btn btn-success mb-3">Добавить</a>
-
+    <form method="get">
+        <div class="form-group">
+            <label for="categoryFilter">Категории товаров:</label>
+            <select id="categoryFilter" asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-control" onchange="this.form.submit()">
+                <option value="">Все категории</option>
+            </select>
+        </div>
+    </form>
     <div class="row row-cols-4">
         @foreach (var product in Model.Products)
         {
@@ -17,8 +23,6 @@
                         <h5 class="card-title flex-grow-1">@product.Name</h5>
                         <div class="mt-auto">
                             <a asp-page="/DigitalProducts/Details" asp-route-id="@product.Id" class="btn btn-primary">Купить</a>
-                            <a asp-page="/DigitalProducts/Delete" asp-route-id="@product.Id" class="btn btn-danger btn-block">Удалить</a>
-                            <a asp-page="/DigitalProducts/Edit" asp-route-id="@product.Id" class="btn btn-primary">Редактировать</a>
                         </div>
                     </div>
                 </div>

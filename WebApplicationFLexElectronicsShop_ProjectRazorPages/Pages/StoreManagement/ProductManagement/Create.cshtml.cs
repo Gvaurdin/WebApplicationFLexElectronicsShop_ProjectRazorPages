@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FLexElectronicsShop.Data;
 using FLexElectronicsShop.Model;
+using FLexElectronicsShop.Services.Interfaces;
+using FLexElectronicsShop.ViewModel;
+using FLexElectronicsShop.Services;
 
 namespace FLexElectronicsShop.Pages.StoreManagement.ProductManagement
 {
     public class CreateModel : PageModel
     {
         private readonly FLexElectronicsShop.Data.FEShopContext _context;
+        private IPhotoService PhotoService;
 
-        public CreateModel(FLexElectronicsShop.Data.FEShopContext context)
+        public CreateModel(FLexElectronicsShop.Data.FEShopContext context, IPhotoService photoService)
         {
             _context = context;
+            PhotoService = photoService;
         }
 
         public IActionResult OnGet()
@@ -26,17 +31,24 @@ namespace FLexElectronicsShop.Pages.StoreManagement.ProductManagement
         }
 
         [BindProperty]
-        public Product Product { get; set; } = default!;
+        public ProductViewModel Product { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Product.URL is null)
             {
                 return Page();
             }
 
-            _context.Products.Add(Product);
+            var resultAddPhoto = await PhotoService.AddPhotoAsync(Product.URL);
+            var product = new Product
+            {
+                Name = Product.Title,
+                Description = Product.Description,
+                CategoryId = Product.CategoryId,
+                URL = resultAddPhoto.Url.ToString()
+            };
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

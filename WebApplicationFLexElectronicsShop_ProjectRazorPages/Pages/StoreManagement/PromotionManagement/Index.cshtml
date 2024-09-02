@@ -43,17 +43,26 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DiscountPercentage)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                <td>
+                    @(item.StartDate != null ? item.StartDate.ToString("dd.MM.yyyy") : "")
+                </td>
+                <td>
+                    @(item.EndDate != null ? item.EndDate.ToString("dd.MM.yyyy") : "")
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("manager"))
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        <span>|</span>
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                        <span>|</span>
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                    else if(User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator")))
+                    {
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    }
+                </td>
         </tr>
 }
     </tbody>

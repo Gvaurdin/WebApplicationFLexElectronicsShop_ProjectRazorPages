@@ -45,6 +45,11 @@ namespace FLexElectronicsShop.Pages.StoreManagement.StoreCatalogManagement
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            if (CatalogItem.PromotionId is not null)
+            {
+                CatalogItem.Promotion = await _context.Promotions.FirstAsync(p => p.Id == CatalogItem.PromotionId);
+            }
+            CatalogItem.DiscountedPrice = CatalogItem.ApplyDiscount(CatalogItem.Promotion, CatalogItem.DiscountedPrice, CatalogItem.Price);
             if (!ModelState.IsValid)
             {
                 return Page();

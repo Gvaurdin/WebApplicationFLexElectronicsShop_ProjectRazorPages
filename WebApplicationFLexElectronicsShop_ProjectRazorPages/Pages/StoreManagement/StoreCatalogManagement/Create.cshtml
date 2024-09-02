@@ -29,7 +29,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="CatalogItem.PromotionId" class="control-label"></label>
-                <select asp-for="CatalogItem.PromotionId" class ="form-control" asp-items="ViewBag.PromotionId"></select>
+                <select asp-for="CatalogItem.PromotionId" class="form-control" asp-items="ViewBag.PromotionId">
+                    <option value="">-- Select Promotion (Optional) --</option>
+                </select>
+                <span asp-validation-for="CatalogItem.PromotionId" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">

@@ -22,8 +22,8 @@ namespace FLexElectronicsShop.Pages.StoreManagement.StoreCatalogManagement
 
         public IActionResult OnGet()
         {
-        ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Description");
-        ViewData["PromotionId"] = new SelectList(_context.Promotions, "Id", "Name");
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Description");
+            ViewData["PromotionId"] = new SelectList(_context.Promotions, "Id", "Name");
             return Page();
         }
 
@@ -33,13 +33,16 @@ namespace FLexElectronicsShop.Pages.StoreManagement.StoreCatalogManagement
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            CatalogItem.Promotion = await _context.Promotions.FirstAsync(p => p.Id == CatalogItem.PromotionId);
-            CatalogItem.ApplyDiscount(CatalogItem.Promotion,CatalogItem.DiscountedPrice,CatalogItem.Price);
+            if (CatalogItem.PromotionId is not null)
+            {
+                CatalogItem.Promotion = await _context.Promotions.FirstAsync(p => p.Id == CatalogItem.PromotionId);
+            }
+            CatalogItem.DiscountedPrice = CatalogItem.ApplyDiscount(CatalogItem.Promotion, CatalogItem.DiscountedPrice, CatalogItem.Price);
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            
+
             _context.CatalogItems.Add(CatalogItem);
             await _context.SaveChangesAsync();
 

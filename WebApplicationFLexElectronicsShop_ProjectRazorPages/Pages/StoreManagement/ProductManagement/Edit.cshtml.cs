@@ -8,20 +8,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FLexElectronicsShop.Data;
 using FLexElectronicsShop.Model;
+using FLexElectronicsShop.Services.Interfaces;
+using FLexElectronicsShop.ViewModel;
 
 namespace FLexElectronicsShop.Pages.StoreManagement.ProductManagement
 {
     public class EditModel : PageModel
     {
         private readonly FLexElectronicsShop.Data.FEShopContext _context;
-
-        public EditModel(FLexElectronicsShop.Data.FEShopContext context)
+        private IPhotoService PhotoService;
+        public EditModel(FLexElectronicsShop.Data.FEShopContext context, IPhotoService photoService)
         {
             _context = context;
+            PhotoService = photoService;
         }
 
         [BindProperty]
-        public Product Product { get; set; } = default!;
+        public ProductViewModel Product { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,21 +38,38 @@ namespace FLexElectronicsShop.Pages.StoreManagement.ProductManagement
             {
                 return NotFound();
             }
-            Product = product;
+            Product = new ProductViewModel
+            {
+                Id = product.Id,
+                Title = product.Name,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                URL = null
+            };
            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Product).State = EntityState.Modified;
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == Product.Id);
+
+            if(Product.URL is not null)
+            {
+                await PhotoService.DeletePhotoAsync(product.URL);
+                var resultAddPhoto = await PhotoService.AddPhotoAsync(Product.URL);
+                product.URL = resultAddPhoto.Url.ToString();
+            }
+
+            product.Name = Product.Title;
+            product.Description = Product.Description;
+            product.CategoryId = Product.CategoryId;
 
             try
             {
