@@ -1,5 +1,6 @@
 using FLexElectronicsShop.Data;
 using FLexElectronicsShop.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ namespace FLexElectronicsShop.Pages.DigitalProducts
         public SelectList Categories { get; set; }
         [BindProperty(SupportsGet = true)]
         public int? SelectedCategoryId { get; set; }
+
         public async Task OnGetAsync()
         {
             Categories = new SelectList(await eShopContext.Categories.ToListAsync(), "Id", "Name");

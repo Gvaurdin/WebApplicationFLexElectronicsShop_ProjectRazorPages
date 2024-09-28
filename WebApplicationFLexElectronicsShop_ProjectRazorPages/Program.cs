@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using FLexElectronicsShop.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using FLexElectronicsShop.Filteres;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,14 @@ void ConfigurationServices(IServiceCollection services)
     services.AddSingleton<IPhotoService, PhotoService>();
     services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
     services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<FEShopContext>();
+    // применяем фильтр авторизации глобально
+    services.AddRazorPages(options =>
+    {
+        options.Conventions.AddFolderApplicationModelConvention("/", model =>
+        {
+            model.Filters.Add(new AuthorizationFilter());
+        });
+    });
 
     services.AddMemoryCache();
     services.AddSession();

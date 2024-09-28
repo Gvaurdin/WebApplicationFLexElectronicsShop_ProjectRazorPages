@@ -41,4 +41,14 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="form-container">
+            <h5>Вход в личный кабинет</h5>
+            <form method="post" asp-page="/UserAccount/Login">
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+            <p class="mt-2">Нет аккаунта? <button type="submit" class="btn btn-primary" asp-page="/UserAccount/Register">Зарегистрироваться</button></p>
+        </div>
+    }
 </div>
